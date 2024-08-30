@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  apache:
+    build: ./apache
+    ports:
+      - "8080:80"
+    volumes:
+      - ./apache/apache.conf:/usr/local/apache2/conf/httpd.conf
+      - ./apache/logs:/usr/local/apache2/logs
+    user: "root"
+    command: /bin/sh -c "ls -la /usr/local/apache2/conf && ls -la /usr/local/apache2/logs && httpd -t && exec httpd-foreground"
+  api:
+    build: ./api
+    ports:
+      - "5001:5000"
